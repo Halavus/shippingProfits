@@ -1,6 +1,6 @@
 import json, csv, operator, math
 
-debug = False
+debug = True
 
 with open('profits.csv', mode='w', newline='') as ag:
     agWriter = csv.writer(ag, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)    
