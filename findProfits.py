@@ -119,7 +119,7 @@ with open('profits.csv', mode='w', newline='') as ag:
             ])
     
     try:
-        with open('brokerdata\\brokerdataAgriculture.json') as f:
+        with open('brokerdata/brokerdataAgriculture.json') as f:
             data = json.load(f)
             agWriter.writerow(["Agricultural Products"])
             get_row("HOP")
@@ -140,12 +140,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
 
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
 
     try:
-        with open('brokerdata\\brokerdataAlloys.json') as f:
+        with open('brokerdata/brokerdataAlloys.json') as f:
             data = json.load(f)        
             agWriter.writerow(["Alloys"])
             get_row("BTI")
@@ -157,12 +157,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataConsumables.json') as f:
+        with open('brokerdata/brokerdataConsumables.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Basic Consumables"])
             get_row("DW")
@@ -182,12 +182,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
 
     try:
-        with open('brokerdata\\brokerdataChemicals.json') as f:
+        with open('brokerdata/brokerdataChemicals.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Chemicals"])
             
@@ -206,12 +206,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")        
             
     try:
-        with open('brokerdata\\brokerdataConstructionMaterials.json') as f:
+        with open('brokerdata/brokerdataConstructionMaterials.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Construction Materials"])
             
@@ -228,12 +228,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataConstructionParts.json') as f:
+        with open('brokerdata/brokerdataConstructionParts.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Construction Parts"])
             
@@ -253,12 +253,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataConstructionPrefabs.json') as f:
+        with open('brokerdata/brokerdataConstructionPrefabs.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Construction Prefabs"])
             
@@ -282,12 +282,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataElectronicDevices.json') as f:
+        with open('brokerdata/brokerdataElectronicDevices.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Electronic Devices"])
             
@@ -302,12 +302,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataElectronicParts.json') as f:
+        with open('brokerdata/brokerdataElectronicParts.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Electronic Parts"])
             
@@ -326,12 +326,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataElectronicPieces.json') as f:
+        with open('brokerdata/brokerdataElectronicPieces.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Electronic Pieces"])
             
@@ -348,12 +348,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")            
         
     try:
-        with open('brokerdata\\brokerdataElectronicSystems.json') as f:
+        with open('brokerdata/brokerdataElectronicSystems.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Electronic Systems"])
             
@@ -366,12 +366,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataElements.json') as f:
+        with open('brokerdata/brokerdataElements.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Elements"])
             
@@ -389,12 +389,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataFuel.json') as f:
+        with open('brokerdata/brokerdataFuel.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Fuel"])
             
@@ -403,12 +403,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataGases.json') as f:
+        with open('brokerdata/brokerdataGases.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Gases"])
             
@@ -424,12 +424,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataLiquids.json') as f:
+        with open('brokerdata/brokerdataLiquids.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Liquids"])
             
@@ -439,12 +439,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataLuxuryConsumables.json') as f:
+        with open('brokerdata/brokerdataLuxuryConsumables.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Luxury Consumables"])
             
@@ -461,12 +461,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataMetals.json') as f:
+        with open('brokerdata/brokerdataMetals.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Metals"])
             
@@ -480,12 +480,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
 
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataMinerals.json') as f:
+        with open('brokerdata/brokerdataMinerals.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Minerals"])
             
@@ -504,12 +504,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataOres.json') as f:
+        with open('brokerdata/brokerdataOres.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Ores"])
             
@@ -522,12 +522,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataPlastics.json') as f:
+        with open('brokerdata/brokerdataPlastics.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Plastics"])
             
@@ -542,12 +542,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataShipParts.json') as f:
+        with open('brokerdata/brokerdataShipParts.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Ship Parts"])
             
@@ -556,12 +556,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataSoftware.json') as f:
+        with open('brokerdata/brokerdataSoftware.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Software"])
             
@@ -583,12 +583,12 @@ with open('profits.csv', mode='w', newline='') as ag:
             agWriter.writerow([""])
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
         
     try:
-        with open('brokerdata\\brokerdataTextiles.json') as f:
+        with open('brokerdata/brokerdataTextiles.json') as f:
             data = json.load(f)            
             agWriter.writerow(["Textiles"])
             
@@ -599,6 +599,6 @@ with open('profits.csv', mode='w', newline='') as ag:
             get_row("TK")
             
             f.close()
-    except EnvironmentError:
+    except json.decoder.JSONDecodeError:
         if debug:
             print("No data, skipping...")
