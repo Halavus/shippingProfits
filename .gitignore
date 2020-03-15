@@ -2,3 +2,4 @@ tester.py
 *.swp
 *.csv
 __pycache__
+testclass.py
