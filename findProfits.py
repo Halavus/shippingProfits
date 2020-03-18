@@ -1,37 +1,42 @@
-import json, csv, operator, math
+import json
+import csv
+from operator import itemgetter
+from math import floor
+
+from sizes import sizes
 
 debug = True
 
+
 class Filewriter:
     def __init__(self, jsonstring, filepath):
-        self.katAsk, self.katBid,
-        self.promAsk = -1
-        self.promBid = -1
-        self.montAsk = -1
-        self.montBid = -1
+        ' "cell" values are added dynamically from _get_row()'
 
         self.weightOrVol = -1.0
 
-        self.jsonstring = jsonstring
+        with open(jsonstring, "r") as f:
+            self.jsonstring = json.load(f)
+
         self.filepath = filepath
 
     def _jsonparse(self, ticker, label):
+        if debug:
+            print(ticker)
+            print(self.jsonstring[ticker])
         try:
-            output = self.jsonstring[ticker][label]
+            output = self.jsonstring[ticker][label].replace(",", "")
         except (KeyError, ValueError) as e:
             output = None
         return output
 
-    def test(self, teststring, ticker, cx):
-        return self.jsonparse(ticker, cx+"."+teststring)
+    def _test(self, teststring, ticker, cx):
+        return self._jsonparse(ticker, cx+"."+teststring)
 
     def _get_row(self, ticker):
         # Get weight/volume
-        ''' TODO: IMPLEMENT PROPERLY: make weight module'''
-        weight = 1.0
-        volume = 1.0
+        weight = sizes[ticker]["weight"]
+        volume = sizes[ticker]["volume"]
 
-        weightOrVol = -1.0
         if(weight > volume):
             self.weightOrVol = weight
         else:
@@ -41,32 +46,32 @@ class Filewriter:
         # Check if asks/bids exist
         checkdic["cx"] = "CI1"
         try:
-            katAsk = float(test("ask", **checkdic))
+            katAsk = float(self._test("ask", **checkdic))
         except (TypeError, ValueError) as e:
             katAsk = -1
 
         try:
-            katBid = float(test("bid", **checkdic))
+            katBid = float(self._test("bid", **checkdic))
         except (TypeError, ValueError) as e:
             katBid = -1
 
-        checkdic["cx"]="IC1"
+        checkdic["cx"] = "IC1"
         try:
-            promAsk = float(test("ask", **checkdic))
+            promAsk = float(self._test("ask", **checkdic))
         except (TypeError, ValueError) as e:
             promAsk = -1
         try:
-            promBid = float(test("bid", **checkdic))
+            promBid = float(self._test("bid", **checkdic))
         except (TypeError, ValueError) as e:
             promBid = -1
 
-        checkdic["cx"]="NC1"
+        checkdic["cx"] = "NC1"
         try:
-            montAsk = float(test("ask", **checkdic))
+            montAsk = float(self._test("ask", **checkdic))
         except (TypeError, ValueError) as e:
             montAsk = -1
         try:
-            montBid = float(test("bid", **checkdic))
+            montBid = float(self._test("bid", **checkdic))
         except (TypeError, ValueError) as e:
             montBid = -1
 
@@ -109,15 +114,6 @@ class Filewriter:
             montProm = -1
 
         # Find max profit
-        ''' no use for profitList
-        profitList = [
-            katProm,
-            katMont,
-            promKat,
-            promMont,
-            montKat,
-            montProm]
-        '''
         profitDict = {
             "Kat -> Prom": katProm,
             "Kat -> Mont": katMont,
@@ -128,7 +124,7 @@ class Filewriter:
         }
 
         # Find best route and corresponding profit per unit
-        bestRoute = max(profitDict.items(), key=operator.itemgetter(1))[0]
+        bestRoute = max(profitDict.items(), key=itemgetter(1))[0]
         maxPPU = profitDict.get(bestRoute)
 
         if debug:
@@ -142,34 +138,28 @@ class Filewriter:
         elif(bestRoute.startswith("Mont")):
             bestBuy = montAsk
 
-        # Write line
-        with open(filepath, mode='w', newline='') as ag:
-            agWriter = csv.writer(ag, delimiter=',',
-                                  quotechar='"',
-                                  quoting=csv.QUOTE_MINIMAL)
+        # Set attributes
+        attr = {
+            "ticker": ticker,
+            "katAsk": katAsk,
+            "katBid": katBid,
+            "promAsk": promAsk,
+            "promBid": promBid,
+            "montAsk": montAsk,
+            "montBid": montBid,
+            "katProm": katProm,
+            "katMont": katMont,
+            "promKat": promKat,
+            "promMont": promMont,
+            "montKat": montKat,
+            "montProm": montProm,
+            "bestRoute": bestRoute,
+            "bestBuy": bestBuy,
+            "maxPPU": maxPPU,
+            }
 
-            agWriter.writerow([ticker,
-                               weightOrVol,
-                               math.floor(400/weightOrVol),
-                               katAsk,
-                               katBid,
-                               promAsk,
-                               promBid,
-                               montAsk,
-                               montBid,
-                               "",
-                               katProm,
-                               katMont,
-                               promKat,
-                               promMont,
-                               montKat,
-                               montProm,
-                               "",
-                               bestRoute,
-                               round(maxPPU*(400/weightOrVol), 2),
-                               # Investment
-                               round(bestBuy*(400/weightOrVol), 2),
-                              ])
+        for i in attr:
+            setattr(self, i, attr[i])
 
     def tablemaker(self):
         with open(self.filepath, mode='w', newline='') as ag:
@@ -197,11 +187,34 @@ class Filewriter:
                                'Best route',
                                'Max sales/ship',
                                'Investment',
-                              ])
+                               ])
 
-        data = json.load(self.jsonstring)
-        for i in data.keys():
-            try:
-                _get_row(i)
-            except (KeyError, ValueError) as e:
-                pass
+            data = self.jsonstring
+            for i in data.keys():
+                try:
+                    self._get_row(i)
+
+                    agWriter.writerow([self.ticker,
+                                       self.weightOrVol,
+                                       floor(400/self.weightOrVol),
+                                       self.katAsk,
+                                       self.katBid,
+                                       self.promAsk,
+                                       self.promBid,
+                                       self.montAsk,
+                                       self.montBid,
+                                       "",
+                                       self.katProm,
+                                       self.katMont,
+                                       self.promKat,
+                                       self.promMont,
+                                       self.montKat,
+                                       self.montProm,
+                                       "",
+                                       self.bestRoute,
+                                       round(self.maxPPU*(400/self.weightOrVol), 2),
+                                       # Investment
+                                       round(self.bestBuy*(400/self.weightOrVol), 2),
+                                       ])
+                except (KeyError, ValueError) as e:
+                    print("Error in _get_row()"+str(e))
