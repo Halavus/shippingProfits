@@ -3,3 +3,4 @@ tester.py
 *.csv
 __pycache__
 testclass.py
+test.json
